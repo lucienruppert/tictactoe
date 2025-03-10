@@ -111,9 +111,6 @@ export class GameComponent {
     if (this.isNameSaved) {
       this.gameService
         .updateGame(this.gameId!, this.gameState, this.gameName)
-        .subscribe((response) => {
-          console.log('Game updated:', response);
-        });
       return;
     }
 
@@ -126,7 +123,6 @@ export class GameComponent {
       this.gameService
         .createGame(this.gameState, this.gameName)
         .subscribe((response: CreateGameResponse) => {
-          console.log('Board created:', response);
           this.gameId = response.id;
           this.isBoardCreated = true;
           this.showNameInput = false;
