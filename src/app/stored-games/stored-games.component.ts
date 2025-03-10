@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../game/game.service';
@@ -17,7 +17,7 @@ export class StoredGamesComponent implements OnInit {
   allGames: StoredGame[] = [];
   filterText: string = '';
 
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService, private router: Router) {}
 
   loadGames(): void {
     this.gameService.getGames().subscribe((games) => {
@@ -45,8 +45,6 @@ export class StoredGamesComponent implements OnInit {
   }
 
   getGame(id: number): void {
-    this.gameService.getGameBy(id).subscribe((game) => {
-      console.log('Game details:', game);
-    });
+    this.router.navigate(['/game', id]);
   }
 }

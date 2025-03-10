@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { WINNING_PATTERNS_3 } from './winningPatterns';
@@ -15,7 +15,7 @@ import { CreateGameResponse } from '../types';
   providers: [],
   standalone: true,
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
   tableSize: number = 3;
   gameState: string;
   nextUp: number = 1;
@@ -30,8 +30,22 @@ export class GameComponent {
     return '0'.repeat(Math.pow(this.tableSize, 2));
   }
 
-  constructor(private gameService: GameService) {
+  constructor(private gameService: GameService, private route: ActivatedRoute) {
     this.gameState = this.createInitialGameState();
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe((params) => {
+      if (params['id']) {
+        this.gameService.getGameBy(params['id']).subscribe((game) => {
+          this.gameState = game.board;
+          this.gameName = game.name;
+          this.gameId = game.id;
+          this.isNameSaved = true;
+          this.isBoardCreated = true;
+        });
+      }
+    });
   }
 
   getGameStateForBoard(): string[][] {
@@ -109,8 +123,7 @@ export class GameComponent {
 
   saveGame(): void {
     if (this.isNameSaved) {
-      this.gameService
-        .updateGame(this.gameId!, this.gameState, this.gameName)
+      this.gameService.updateGame(this.gameId!, this.gameState, this.gameName);
       return;
     }
 
