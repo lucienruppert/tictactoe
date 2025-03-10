@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { CreateGameResponse } from '../types';
+import { CreateGameResponse, StoredGame } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -23,5 +23,9 @@ export class GameService {
       `${environment.apiUrl}boards/${id}`,
       { board, name }
     );
+  }
+
+  getBoards(): Observable<StoredGame[]> {
+    return this.http.get<StoredGame[]>(`${environment.apiUrl}boards`);
   }
 }

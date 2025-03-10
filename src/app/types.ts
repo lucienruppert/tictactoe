@@ -3,3 +3,5 @@ export interface CreateGameResponse {
   name: string;
   board: string;
 }
+
+export type StoredGame = CreateGameResponse;
