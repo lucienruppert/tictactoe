@@ -34,10 +34,17 @@
   </div>
   <button
     *ngIf="hasGameStarted() && !isGameOver()"
+    (click)="saveGame()"
     class="mt-8 px-6 py-2 bg-blue-700 hover:bg-blue-600 rounded-md text-white font-semibold"
   >
     Jelenlegi állapot mentése
   </button>
+  <input
+    *ngIf="showNameInput"
+    [(ngModel)]="gameName"
+    placeholder="Játék neve"
+    class="mt-4 px-4 py-2 border rounded-md bg-black text-yellow-500"
+  />
   <button
     *ngIf="isGameOver()"
     (click)="resetGame()"

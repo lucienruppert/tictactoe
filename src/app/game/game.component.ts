@@ -3,12 +3,13 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { WINNING_PATTERNS_3 } from './winningPatterns';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
-  imports: [RouterLink, CommonModule, MatIconModule],
+  imports: [RouterLink, CommonModule, MatIconModule, FormsModule],
   standalone: true,
 })
 export class GameComponent {
@@ -17,6 +18,8 @@ export class GameComponent {
   isSaved: boolean = false;
   nextUp: number = 1;
   winner: number | null = null;
+  showNameInput: boolean = false;
+  gameName: string = '';
 
   private createInitialGameState(): string {
     return '0'.repeat(Math.pow(this.tableSize, 2));
@@ -97,5 +100,17 @@ export class GameComponent {
 
   hasGameStarted(): boolean {
     return this.countPlacedIcons() > 0;
+  }
+
+  saveGame(): void {
+    if (!this.showNameInput) {
+      this.showNameInput = true;
+      return;
+    }
+    if (this.gameName.trim()) {
+      console.log('Saving game with name:', this.gameName);
+      this.showNameInput = false;
+      this.gameName = '';
+    }
   }
 }
