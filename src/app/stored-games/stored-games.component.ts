@@ -16,9 +16,19 @@ export class StoredGamesComponent implements OnInit {
 
   constructor(private gameService: GameService) {}
 
-  ngOnInit(): void {
+  loadGames(): void {
     this.gameService.getGames().subscribe((games) => {
       this.games = games;
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadGames();
+  }
+
+  deleteGame(id: number): void {
+    this.gameService.deleteGame(id).subscribe(() => {
+      this.loadGames();
     });
   }
 }

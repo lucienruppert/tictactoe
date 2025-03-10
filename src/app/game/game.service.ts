@@ -28,4 +28,8 @@ export class GameService {
   getGames(): Observable<StoredGame[]> {
     return this.http.get<StoredGame[]>(`${environment.apiUrl}boards`);
   }
+
+  deleteGame(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}boards/${id}`);
+  }
 }

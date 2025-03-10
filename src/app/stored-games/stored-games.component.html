@@ -8,9 +8,15 @@
   <div class="mt-8 w-96">
     <div
       *ngFor="let game of games"
-      class="mb-4 p-4 border border-gray-700 rounded-lg"
+      class="mb-4 p-4 border border-gray-700 rounded-lg flex justify-between items-center"
     >
       <h3 class="text-xl text-yellow-400">{{ game.name }}</h3>
+      <button
+        (click)="deleteGame(game.id)"
+        class="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-white"
+      >
+        Törlés
+      </button>
     </div>
   </div>
 </main>
