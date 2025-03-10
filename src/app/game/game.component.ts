@@ -130,7 +130,11 @@ export class GameComponent implements OnInit {
 
   saveGame(): void {
     if (this.isNameSaved) {
-      this.gameService.updateGame(this.gameId!, this.gameState, this.gameName);
+      this.gameService
+        .updateGame(this.gameId!, this.gameState, this.gameName)
+        .subscribe((response) => {
+          console.log('Game updated:', response);
+        });
       return;
     }
 
