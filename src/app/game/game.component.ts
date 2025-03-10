@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,18 +11,15 @@ import { WINNING_PATTERNS_3 } from './winningPatterns';
   imports: [RouterLink, CommonModule, MatIconModule],
   standalone: true,
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
   tableSize: number = 3;
   gameState: string;
   isSaved: boolean = false;
   nextUp: number = 1;
+  winner: number | null = null;
 
   constructor() {
     this.gameState = '0'.repeat(Math.pow(this.tableSize, 2));
-  }
-
-  ngOnInit() {
-    console.log(this.gameState);
   }
 
   getGameStateForBoard(): string[][] {
@@ -46,9 +43,12 @@ export class GameComponent implements OnInit {
       const matches = pattern.split('').every((value, index) => {
         return value === '0' || value === this.gameState[index];
       });
+      if (matches) {
+        // Set winner to the player who just played (opposite of nextUp)
+        this.winner = this.nextUp === 1 ? 2 : 1;
+      }
       return matches;
     });
-    console.log('Is there a winner?', isWinningPattern);
   }
 
   handleClick(i: number, j: number): void {
@@ -67,6 +67,9 @@ export class GameComponent implements OnInit {
   }
 
   getCurrentPlayerText(): string {
+    if (this.winner) {
+      return `${this.winner === 1 ? 'X' : 'O'} a győztes. Gratula!`;
+    }
     return this.nextUp === 1 ? 'X jön' : 'O jön';
   }
 }
