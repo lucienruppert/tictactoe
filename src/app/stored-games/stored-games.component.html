@@ -6,6 +6,12 @@
   >
 
   <div class="mt-8 w-96">
+    <input
+      [(ngModel)]="filterText"
+      (ngModelChange)="filterGames()"
+      placeholder="Keresés név alapján..."
+      class="w-full mb-4 px-4 py-2 bg-black border border-gray-700 rounded-lg text-yellow-400"
+    />
     <div
       *ngFor="let game of games"
       class="mb-4 p-4 border border-gray-700 rounded-lg flex justify-between items-center"
