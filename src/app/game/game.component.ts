@@ -38,6 +38,10 @@ export class GameComponent {
     return this.gameState.split('').filter((cell) => cell !== '0').length;
   }
 
+  private isBoardFull(): boolean {
+    return !this.gameState.includes('0');
+  }
+
   private checkWinner(): void {
     const isWinningPattern = WINNING_PATTERNS_3.some((pattern) => {
       const matches = pattern.split('').every((value, index) => {
@@ -51,7 +55,7 @@ export class GameComponent {
   }
 
   handleClick(i: number, j: number): void {
-    if (this.winner) return; 
+    if (this.winner) return;
 
     const index = i * this.tableSize + j;
     if (this.gameState[index] === '0') {
@@ -68,6 +72,9 @@ export class GameComponent {
   }
 
   getCurrentPlayerText(): string {
+    if (this.isBoardFull()) {
+      return 'Döntetlen!';
+    }
     if (this.winner) {
       return `${this.winner === 1 ? 'X' : 'O'} a győztes. Gratula!`;
     }
