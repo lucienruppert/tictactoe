@@ -19,8 +19,14 @@
         (click)="handleClick(i, j)"
         class="w-20 h-20 border-r-2 border-b-2 border-gray-400 flex items-center justify-center text-2xl cursor-pointer"
       >
-        <mat-icon *ngIf="cell === '1'" class="text-blue-400">clear</mat-icon>
-        <mat-icon *ngIf="cell === '2'" class="text-yellow-400"
+        <mat-icon
+          *ngIf="cell === '1'"
+          class="text-blue-400 transition-opacity duration-400"
+          >clear</mat-icon
+        >
+        <mat-icon
+          *ngIf="cell === '2'"
+          class="text-yellow-400 transition-opacity duration-400"
           >radio_button_unchecked</mat-icon
         >
       </div>
