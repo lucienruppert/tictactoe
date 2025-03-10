@@ -10,13 +10,13 @@
       [(ngModel)]="filterText"
       (ngModelChange)="filterGames()"
       placeholder="Keresés név alapján..."
-      class="w-full mb-4 px-4 py-2 bg-black border border-gray-700 rounded-lg text-yellow-400"
+      class="w-full mb-4 px-4 py-2 bg-black border border-gray-700 rounded-lg text-gray-200"
     />
     <div
       *ngFor="let game of games"
       class="mb-4 p-4 border border-gray-700 rounded-lg flex justify-between items-center"
     >
-      <h3 class="text-xl text-yellow-400">{{ game.name }}</h3>
+      <h3 class="text-xl text-gray-200">{{ game.name }}</h3>
       <div class="flex gap-2">
         <button
           (click)="getGame(game.id)"

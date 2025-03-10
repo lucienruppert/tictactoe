@@ -21,7 +21,7 @@ export class StoredGamesComponent implements OnInit {
 
   loadGames(): void {
     this.gameService.getGames().subscribe((games) => {
-      this.allGames = games;
+      this.allGames = games.sort((a, b) => a.name.localeCompare(b.name));
       this.filterGames();
     });
   }
