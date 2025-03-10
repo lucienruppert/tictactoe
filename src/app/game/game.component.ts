@@ -44,7 +44,6 @@ export class GameComponent {
         return value === '0' || value === this.gameState[index];
       });
       if (matches) {
-        // Set winner to the player who just played (opposite of nextUp)
         this.winner = this.nextUp === 1 ? 2 : 1;
       }
       return matches;
@@ -52,6 +51,8 @@ export class GameComponent {
   }
 
   handleClick(i: number, j: number): void {
+    if (this.winner) return; 
+
     const index = i * this.tableSize + j;
     if (this.gameState[index] === '0') {
       this.gameState =
