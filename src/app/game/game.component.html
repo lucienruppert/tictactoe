@@ -4,4 +4,15 @@
     class="text-blue-600 hover:text-blue-800 underline mt-4 inline-block"
     >View Stored Games</a
   >
+
+  <div class="mt-8 border-l-2 border-t-2 border-gray-400">
+    <div *ngFor="let row of getGameStateForBoard(); let i = index" class="flex">
+      <div
+        *ngFor="let cell of row; let j = index"
+        class="w-20 h-20 border-r-2 border-b-2 border-gray-400 flex items-center justify-center text-2xl cursor-pointer"
+      >
+        {{ cell !== "0" ? cell : "" }}
+      </div>
+    </div>
+  </div>
 </main>
