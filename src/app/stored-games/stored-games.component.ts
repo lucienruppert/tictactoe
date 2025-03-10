@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-stored-games',
-  imports: [],
   templateUrl: './stored-games.component.html',
-  styleUrl: './stored-games.component.css'
+  styleUrls: ['./stored-games.component.css'],
+  imports: [RouterLink],
+  standalone: true,
 })
-export class StoredGamesComponent {
-
-}
+export class StoredGamesComponent {}

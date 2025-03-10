@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-game',
-  imports: [],
   templateUrl: './game.component.html',
-  styleUrl: './game.component.css'
+  styleUrls: ['./game.component.css'],
+  imports: [RouterLink],
+  standalone: true,
 })
-export class GameComponent {
-
-}
+export class GameComponent {}
