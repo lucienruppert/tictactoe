@@ -18,8 +18,12 @@ export class GameComponent {
   nextUp: number = 1;
   winner: number | null = null;
 
+  private createInitialGameState(): string {
+    return '0'.repeat(Math.pow(this.tableSize, 2));
+  }
+
   constructor() {
-    this.gameState = '0'.repeat(Math.pow(this.tableSize, 2));
+    this.gameState = this.createInitialGameState();
   }
 
   getGameStateForBoard(): string[][] {
@@ -79,5 +83,15 @@ export class GameComponent {
       return `${this.winner === 1 ? 'X' : 'O'} a győztes. Gratula!`;
     }
     return this.nextUp === 1 ? 'X jön' : 'O jön';
+  }
+
+  isGameOver(): boolean {
+    return this.winner !== null || this.isBoardFull();
+  }
+
+  resetGame(): void {
+    this.gameState = this.createInitialGameState();
+    this.winner = null;
+    this.nextUp = 1;
   }
 }

@@ -26,4 +26,11 @@
       </div>
     </div>
   </div>
+  <button
+    *ngIf="isGameOver()"
+    (click)="resetGame()"
+    class="mt-8 px-6 py-2 bg-yellow-400 hover:bg-yellow-500 rounded-md text-black font-semibold"
+  >
+    Játsszunk újra!
+  </button>
 </main>
