@@ -14,7 +14,7 @@ export class GameComponent implements OnInit {
   tableSize: number = 3;
   gameState: string;
   isSaved: boolean = false;
-  nextUp: number = 1; // Start with player 1
+  nextUp: number = 1;
 
   constructor() {
     this.gameState = '0'.repeat(Math.pow(this.tableSize, 2));
@@ -45,5 +45,9 @@ export class GameComponent implements OnInit {
         this.gameState.substring(index + 1);
       this.nextUp = this.nextUp === 1 ? 2 : 1;
     }
+  }
+
+  getCurrentPlayerText(): string {
+    return this.nextUp === 1 ? 'X jön' : 'O jön';
   }
 }
