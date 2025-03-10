@@ -5,14 +5,16 @@
     >Elmentett játékok</a
   >
 
-  <p
-    class="text-3xl mt-36"
+  <span class="text-yellow-400 my-10 text-4xl underline h-10">{{ gameName }}</span>
+
+  <span
+    class="text-2xl mb-6"
     [ngClass]="nextUp === 1 ? 'text-blue-400' : 'text-yellow-400'"
   >
     {{ getCurrentPlayerText() }}
-  </p>
+</span>
 
-  <div class="mt-8 border-l-2 border-t-2 border-gray-400">
+  <div class="border-l-2 border-t-2 border-gray-400">
     <div *ngFor="let row of getGameStateForBoard(); let i = index" class="flex">
       <div
         *ngFor="let cell of row; let j = index"
