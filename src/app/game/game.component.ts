@@ -109,7 +109,11 @@ export class GameComponent {
 
   saveGame(): void {
     if (this.isNameSaved) {
-      console.log('Saving game with id:', this.gameId);
+      this.gameService
+        .updateGame(this.gameId!, this.gameState, this.gameName)
+        .subscribe((response) => {
+          console.log('Game updated:', response);
+        });
       return;
     }
 
