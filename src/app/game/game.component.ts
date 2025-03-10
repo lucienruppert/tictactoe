@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { WINNING_PATTERNS_3 } from './winningPatterns';
 
 @Component({
   selector: 'app-game',
