@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, MatIconModule],
   standalone: true,
 })
 export class GameComponent implements OnInit {
@@ -16,6 +17,7 @@ export class GameComponent implements OnInit {
 
   constructor() {
     this.gameState = '0'.repeat(Math.pow(this.tableSize, 2));
+    this.gameState = '010201122';
   }
 
   ngOnInit() {
