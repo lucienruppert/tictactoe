@@ -4,12 +4,15 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { WINNING_PATTERNS_3 } from './winningPatterns';
 import { FormsModule } from '@angular/forms';
+import { GameService } from './game.service';
+import { CreateGameResponse } from '../types';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
   imports: [RouterLink, CommonModule, MatIconModule, FormsModule],
+  providers: [],
   standalone: true,
 })
 export class GameComponent {
@@ -20,12 +23,14 @@ export class GameComponent {
   showNameInput: boolean = false;
   gameName: string = '';
   isNameSaved: boolean = false;
+  isBoardCreated: boolean = false;
+  gameId: number | null = null;
 
   private createInitialGameState(): string {
     return '0'.repeat(Math.pow(this.tableSize, 2));
   }
 
-  constructor() {
+  constructor(private gameService: GameService) {
     this.gameState = this.createInitialGameState();
   }
 
@@ -104,7 +109,7 @@ export class GameComponent {
 
   saveGame(): void {
     if (this.isNameSaved) {
-      console.log('Saving game with previously saved name:', this.gameName);
+      console.log('Saving game with id:', this.gameId);
       return;
     }
 
@@ -113,9 +118,16 @@ export class GameComponent {
       return;
     }
 
-    if (this.gameName.trim()) {
-      this.showNameInput = false;
-      this.isNameSaved = true;
+    if (this.gameName.trim() && !this.isBoardCreated) {
+      this.gameService
+        .createGame(this.gameState, this.gameName)
+        .subscribe((response: CreateGameResponse) => {
+          console.log('Board created:', response);
+          this.gameId = response.id;
+          this.isBoardCreated = true;
+          this.showNameInput = false;
+          this.isNameSaved = true;
+        });
     }
   }
 }
