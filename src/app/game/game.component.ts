@@ -37,6 +37,20 @@ export class GameComponent implements OnInit {
     return matrix;
   }
 
+  private countPlacedIcons(): number {
+    return this.gameState.split('').filter((cell) => cell !== '0').length;
+  }
+
+  private checkWinner(): void {
+    const isWinningPattern = WINNING_PATTERNS_3.some((pattern) => {
+      const matches = pattern.split('').every((value, index) => {
+        return value === '0' || value === this.gameState[index];
+      });
+      return matches;
+    });
+    console.log('Is there a winner?', isWinningPattern);
+  }
+
   handleClick(i: number, j: number): void {
     const index = i * this.tableSize + j;
     if (this.gameState[index] === '0') {
@@ -45,6 +59,10 @@ export class GameComponent implements OnInit {
         this.nextUp +
         this.gameState.substring(index + 1);
       this.nextUp = this.nextUp === 1 ? 2 : 1;
+
+      if (this.countPlacedIcons() >= 5) {
+        this.checkWinner();
+      }
     }
   }
 
