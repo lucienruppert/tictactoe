@@ -94,4 +94,8 @@ export class GameComponent {
     this.winner = null;
     this.nextUp = 1;
   }
+
+  hasGameStarted(): boolean {
+    return this.countPlacedIcons() > 0;
+  }
 }
