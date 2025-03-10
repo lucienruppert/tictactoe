@@ -15,11 +15,11 @@ import { FormsModule } from '@angular/forms';
 export class GameComponent {
   tableSize: number = 3;
   gameState: string;
-  isSaved: boolean = false;
   nextUp: number = 1;
   winner: number | null = null;
   showNameInput: boolean = false;
   gameName: string = '';
+  isNameSaved: boolean = false;
 
   private createInitialGameState(): string {
     return '0'.repeat(Math.pow(this.tableSize, 2));
@@ -103,14 +103,19 @@ export class GameComponent {
   }
 
   saveGame(): void {
+    if (this.isNameSaved) {
+      console.log('Saving game with previously saved name:', this.gameName);
+      return;
+    }
+
     if (!this.showNameInput) {
       this.showNameInput = true;
       return;
     }
+
     if (this.gameName.trim()) {
-      console.log('Saving game with name:', this.gameName);
       this.showNameInput = false;
-      this.gameName = '';
+      this.isNameSaved = true;
     }
   }
 }
