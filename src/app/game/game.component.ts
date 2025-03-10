@@ -43,6 +43,13 @@ export class GameComponent implements OnInit {
           this.gameId = game.id;
           this.isNameSaved = true;
           this.isBoardCreated = true;
+
+          const placedCount = this.countPlacedIcons();
+          this.nextUp = placedCount % 2 === 0 ? 1 : 2;
+
+          if (placedCount >= 5) {
+            this.checkWinner();
+          }
         });
       }
     });
