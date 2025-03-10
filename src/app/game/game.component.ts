@@ -70,13 +70,13 @@ export class GameComponent implements OnInit {
 
   private checkWinner(): void {
     const isWinningPattern = WINNING_PATTERNS_3.some((pattern) => {
-      const matches = pattern.split('').every((value, index) => {
+      const isWinner = pattern.split('').every((value, index) => {
         return value === '0' || value === this.gameState[index];
       });
-      if (matches) {
+      if (isWinner) {
         this.winner = this.nextUp === 1 ? 2 : 1;
       }
-      return matches;
+      return isWinner;
     });
   }
 
