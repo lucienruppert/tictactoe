@@ -67,12 +67,12 @@ export class GameComponent implements OnInit {
     return matrix;
   }
 
-  private countPlacedIcons(): number {
-    return this.gameState.split('').filter((cell) => cell !== '0').length;
+  isBoardFull(): boolean {
+    return !this.gameState.includes('0');
   }
 
-  private isBoardFull(): boolean {
-    return !this.gameState.includes('0');
+  private countPlacedIcons(): number {
+    return this.gameState.split('').filter((cell) => cell !== '0').length;
   }
 
   private checkWinner(): void {

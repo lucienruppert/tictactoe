@@ -12,7 +12,9 @@
   <span
     class="text-2xl mb-6"
     [ngClass]="
-      winner
+      isBoardFull()
+        ? 'text-green-600'
+        : winner
         ? winner === 1
           ? 'text-blue-400'
           : 'text-yellow-400'
@@ -62,6 +64,6 @@
     (click)="resetGame()"
     class="mt-8 px-6 py-2 bg-yellow-400 hover:bg-yellow-500 rounded-md text-black font-semibold"
   >
-    Új játék!
+    Új játék
   </button>
 </main>
