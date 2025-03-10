@@ -29,7 +29,11 @@ export class GameService {
     return this.http.get<StoredGame[]>(`${environment.apiUrl}boards`);
   }
 
-  deleteGame(id: number): Observable<void> {
+  deleteGameBy(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}boards/${id}`);
+  }
+
+  getGameBy(id: number): Observable<StoredGame> {
+    return this.http.get<StoredGame>(`${environment.apiUrl}boards/${id}`);
   }
 }

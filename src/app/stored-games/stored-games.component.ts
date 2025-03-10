@@ -39,8 +39,14 @@ export class StoredGamesComponent implements OnInit {
   }
 
   deleteGame(id: number): void {
-    this.gameService.deleteGame(id).subscribe(() => {
+    this.gameService.deleteGameBy(id).subscribe(() => {
       this.loadGames();
+    });
+  }
+
+  getGame(id: number): void {
+    this.gameService.getGameBy(id).subscribe((game) => {
+      console.log('Game details:', game);
     });
   }
 }
