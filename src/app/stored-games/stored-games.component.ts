@@ -17,7 +17,7 @@ export class StoredGamesComponent implements OnInit {
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
-    this.gameService.getBoards().subscribe((games) => {
+    this.gameService.getGames().subscribe((games) => {
       this.games = games;
     });
   }

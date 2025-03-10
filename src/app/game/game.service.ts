@@ -25,7 +25,7 @@ export class GameService {
     );
   }
 
-  getBoards(): Observable<StoredGame[]> {
+  getGames(): Observable<StoredGame[]> {
     return this.http.get<StoredGame[]>(`${environment.apiUrl}boards`);
   }
 }
