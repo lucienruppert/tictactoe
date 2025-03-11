@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { WINNING_PATTERNS_3 } from './winningPatterns';
 import { FormsModule } from '@angular/forms';
 import { GameService } from './game.service';
-import { CreateGameResponse } from '../types';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarService } from '../shared/snackbar.service';
 import { catchError } from 'rxjs/operators';
@@ -143,6 +142,11 @@ export class GameComponent implements OnInit {
   }
 
   saveGame(): void {
+    if (!this.isNameSaved && !this.showNameInput) {
+      this.showNameInput = true;
+      return;
+    }
+
     const saveOperation = this.gameId
       ? this.gameService.updateGame(this.gameId, this.gameState, this.gameName)
       : this.gameService.createGame(this.gameState, this.gameName);
@@ -151,6 +155,7 @@ export class GameComponent implements OnInit {
       .pipe(
         catchError((error) => {
           this.snackbarService.showMessage('Mentés sikertelen');
+          console.error('Error saving game:', error);
           return of(null);
         })
       )
@@ -160,6 +165,7 @@ export class GameComponent implements OnInit {
             this.gameId = response.id;
           }
           this.showNameInput = false;
+          this.isNameSaved = true;
           this.snackbarService.showMessage('Sikeres mentés');
         }
       });
