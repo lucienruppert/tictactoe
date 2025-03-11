@@ -8,6 +8,8 @@ import { GameService } from './game.service';
 import { CreateGameResponse } from '../types';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarService } from '../shared/snackbar.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -141,21 +143,25 @@ export class GameComponent implements OnInit {
   }
 
   saveGame(): void {
-    if (this.gameId) {
-      this.gameService
-        .updateGame(this.gameId, this.gameState, this.gameName)
-        .subscribe(() => {
+    const saveOperation = this.gameId
+      ? this.gameService.updateGame(this.gameId, this.gameState, this.gameName)
+      : this.gameService.createGame(this.gameState, this.gameName);
+
+    saveOperation
+      .pipe(
+        catchError((error) => {
+          this.snackbarService.showMessage('Mentés sikertelen');
+          return of(null);
+        })
+      )
+      .subscribe((response) => {
+        if (response) {
+          if (!this.gameId && 'id' in response) {
+            this.gameId = response.id;
+          }
           this.showNameInput = false;
-          this.snackbarService.showSuccessMessage('Sikeres mentés');
-        });
-    } else {
-      this.gameService
-        .createGame(this.gameState, this.gameName)
-        .subscribe((response: CreateGameResponse) => {
-          this.gameId = response.id;
-          this.showNameInput = false;
-          this.snackbarService.showSuccessMessage('Sikeres mentés');
-        });
-    }
+          this.snackbarService.showMessage('Sikeres mentés');
+        }
+      });
   }
 }
