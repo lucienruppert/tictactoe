@@ -6,8 +6,8 @@ import { WINNING_PATTERNS_3 } from './winningPatterns';
 import { FormsModule } from '@angular/forms';
 import { GameService } from './game.service';
 import { CreateGameResponse } from '../types';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarService } from '../shared/snackbar.service';
 
 @Component({
   selector: 'app-game',
@@ -41,7 +41,7 @@ export class GameComponent implements OnInit {
   constructor(
     private gameService: GameService,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackbarService: SnackbarService
   ) {
     this.gameState = this.createInitialGameState();
   }
@@ -141,39 +141,21 @@ export class GameComponent implements OnInit {
   }
 
   saveGame(): void {
-    if (this.isNameSaved) {
+    if (this.gameId) {
       this.gameService
-        .updateGame(this.gameId!, this.gameState, this.gameName)
+        .updateGame(this.gameId, this.gameState, this.gameName)
         .subscribe(() => {
           this.showNameInput = false;
-          this.showSuccessSnackbar();
+          this.snackbarService.showSuccessMessage('Sikeres mentés');
         });
-      return;
-    }
-
-    if (!this.showNameInput) {
-      this.showNameInput = true;
-      return;
-    }
-
-    if (this.gameName.trim() && !this.isBoardCreated) {
+    } else {
       this.gameService
         .createGame(this.gameState, this.gameName)
         .subscribe((response: CreateGameResponse) => {
           this.gameId = response.id;
-          this.isBoardCreated = true;
           this.showNameInput = false;
-          this.isNameSaved = true;
-          this.showSuccessSnackbar();
+          this.snackbarService.showSuccessMessage('Sikeres mentés');
         });
     }
-  }
-
-  private showSuccessSnackbar(): void {
-    this.snackBar.open('Sikeres mentés', '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['yellow-snackbar'],
-    });
   }
 }
