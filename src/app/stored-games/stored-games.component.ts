@@ -6,6 +6,8 @@ import { GameService } from '../game/game.service';
 import { StoredGame } from '../types';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarService } from '../shared/snackbar.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-stored-games',
@@ -45,10 +47,20 @@ export class StoredGamesComponent implements OnInit {
   }
 
   deleteGame(id: number): void {
-    this.gameService.deleteGameBy(id).subscribe(() => {
-      this.loadGames();
-      this.snackbarService.showMessage('Játék sikeresen törölve');
-    });
+    this.gameService
+      .deleteGameBy(id)
+      .pipe(
+        catchError((error) => {
+          this.snackbarService.showMessage('Törlés sikertelen');
+          return of(null);
+        })
+      )
+      .subscribe((response) => {
+        if (response !== null) {
+          this.loadGames();
+          this.snackbarService.showMessage('Játék sikeresen törölve');
+        }
+      });
   }
 
   getGame(id: number): void {
