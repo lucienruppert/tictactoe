@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body
-{
+body {
   @apply bg-black;
+}
+
+.mdc-snackbar__surface {
+  background-color: #facc15 !important;
+}
+
+.mdc-snackbar__label {
+  color: black !important;
+  text-align: center;
+  font-size: 1.2rem !important;
 }

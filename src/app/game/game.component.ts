@@ -6,12 +6,20 @@ import { WINNING_PATTERNS_3 } from './winningPatterns';
 import { FormsModule } from '@angular/forms';
 import { GameService } from './game.service';
 import { CreateGameResponse } from '../types';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
-  imports: [RouterLink, CommonModule, MatIconModule, FormsModule],
+  imports: [
+    RouterLink,
+    CommonModule,
+    MatIconModule,
+    FormsModule,
+    MatSnackBarModule,
+  ],
   providers: [],
   standalone: true,
 })
@@ -30,7 +38,11 @@ export class GameComponent implements OnInit {
     return '0'.repeat(Math.pow(this.tableSize, 2));
   }
 
-  constructor(private gameService: GameService, private route: ActivatedRoute) {
+  constructor(
+    private gameService: GameService,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
+  ) {
     this.gameState = this.createInitialGameState();
   }
 
@@ -132,7 +144,10 @@ export class GameComponent implements OnInit {
     if (this.isNameSaved) {
       this.gameService
         .updateGame(this.gameId!, this.gameState, this.gameName)
-        .subscribe();
+        .subscribe(() => {
+          this.showNameInput = false;
+          this.showSuccessSnackbar();
+        });
       return;
     }
 
@@ -149,7 +164,16 @@ export class GameComponent implements OnInit {
           this.isBoardCreated = true;
           this.showNameInput = false;
           this.isNameSaved = true;
+          this.showSuccessSnackbar();
         });
     }
+  }
+
+  private showSuccessSnackbar(): void {
+    this.snackBar.open('Sikeres mentés', '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: ['yellow-snackbar'],
+    });
   }
 }
