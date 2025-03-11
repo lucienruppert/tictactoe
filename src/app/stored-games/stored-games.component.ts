@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../game/game.service';
 import { StoredGame } from '../types';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarService } from '../shared/snackbar.service';
 
 @Component({
   selector: 'app-stored-games',
   templateUrl: './stored-games.component.html',
   styleUrls: ['./stored-games.component.css'],
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule, MatSnackBarModule],
   standalone: true,
 })
 export class StoredGamesComponent implements OnInit {
@@ -17,7 +19,11 @@ export class StoredGamesComponent implements OnInit {
   allGames: StoredGame[] = [];
   filterText: string = '';
 
-  constructor(private gameService: GameService, private router: Router) {}
+  constructor(
+    private gameService: GameService,
+    private router: Router,
+    private snackbarService: SnackbarService
+  ) {}
 
   loadGames(): void {
     this.gameService.getGames().subscribe((games) => {
@@ -41,6 +47,7 @@ export class StoredGamesComponent implements OnInit {
   deleteGame(id: number): void {
     this.gameService.deleteGameBy(id).subscribe(() => {
       this.loadGames();
+      this.snackbarService.showMessage('Játék sikeresen törölve');
     });
   }
 
