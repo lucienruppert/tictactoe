@@ -36,4 +36,13 @@ export class GameService {
   getGameBy(id: number): Observable<StoredGame> {
     return this.http.get<StoredGame>(`${environment.apiUrl}boards/${id}`);
   }
+
+  getOpponentMove(
+    player: number,
+    board: string
+  ): Observable<{ board: string }> {
+    return this.http.get<{ board: string }>(
+      `${environment.apiUrl}opponent-move?player=${player}&board=${board}`
+    );
+  }
 }

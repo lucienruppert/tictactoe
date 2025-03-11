@@ -141,6 +141,32 @@ export class GameComponent implements OnInit {
     return this.countPlacedIcons() > 0;
   }
 
+  getAIMove(): void {
+    if (this.winner || this.isBoardFull() || this.nextUp === 1) {
+      return;
+    }
+
+    this.gameService
+      .getOpponentMove(2, this.gameState)
+      .pipe(
+        catchError((error) => {
+          this.snackbarService.showMessage('AI lépés sikertelen');
+          console.error('Error getting AI move:', error);
+          return of(null);
+        })
+      )
+      .subscribe((response) => {
+        if (response && response.board) {
+          this.gameState = response.board;
+          this.nextUp = 1;
+
+          if (this.countPlacedIcons() >= 5) {
+            this.checkWinner();
+          }
+        }
+      });
+  }
+
   saveGame(): void {
     if (!this.isNameSaved && !this.showNameInput) {
       this.showNameInput = true;
